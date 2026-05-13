@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Health : MonoBehaviour
+public class ShipHealth : MonoBehaviour
 {
 
     [Header("Variables")]
@@ -23,13 +23,15 @@ public class Health : MonoBehaviour
         if (curHealth <= 0)
         {
             Debug.Log("Death of " + gameObject.name);
+
+            Death();
         }
     }
 
     private void Death()
     {
         //Create particle effects
-        if(deathParticles is not null) Instantiate(deathParticles, transform.position, Quaternion.identity);
+        if(deathParticles != null) Instantiate(deathParticles, transform.position, Quaternion.identity);
 
         Destroy(gameObject);
     }

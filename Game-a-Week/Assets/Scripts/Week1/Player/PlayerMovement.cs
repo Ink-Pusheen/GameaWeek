@@ -4,6 +4,10 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody rb;
 
+    public float speed;
+
+    [SerializeField] float horizontalInput;
+    [SerializeField] float verticalInput;
 
     private void Awake()
     {
@@ -19,13 +23,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (horizontalInput is 0 && verticalInput is 0) return;
+
+        transform.Translate(new Vector3(horizontalInput * speed, 0, verticalInput * speed) * Time.deltaTime);
+        //rb.AddForce(new Vector3(horizontalInput * speed, 0, verticalInput * speed) * Time.deltaTime, ForceMode.Force);
     }
 
     public void ChangeVelocity(float inHorizontal, float inVertical)
     {
-        rb.linearVelocity = new Vector3(inHorizontal * 5, 0, inVertical * 5);
+        horizontalInput = inHorizontal;
+        verticalInput = inVertical;
 
-        Debug.Log($"MOVEEE " + rb.linearVelocity);
+        if(horizontalInput is 0 && verticalInput is 0) rb.linearVelocity = Vector3.zero;
     }
 }

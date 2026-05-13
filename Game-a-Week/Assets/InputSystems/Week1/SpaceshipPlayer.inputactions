@@ -47,6 +47,17 @@
                     "isPartOfComposite": false
                 },
                 {
+                    "name": "",
+                    "id": "4578d241-2ac9-4d89-809e-93f5dae6bd90",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
                     "name": "1D Axis",
                     "id": "ea4a4b13-e30a-444a-8574-8aaf2926b819",
                     "path": "1DAxis",

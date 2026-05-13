@@ -13,11 +13,21 @@ public class PlayerScript : MonoBehaviour
 
     private InputAction fire;
 
+    [Header("Components")]
+
     [SerializeField] PlayerMovement pMovement;
+
+    [SerializeField] ShipBlasters pBlasters;
+
+    [SerializeField] ShipHealth pHealth;
 
     private void Awake()
     {
         pMovement = GetComponent<PlayerMovement>();
+
+        pBlasters = GetComponent<ShipBlasters>();
+
+        pHealth = GetComponent<ShipHealth>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -50,9 +60,9 @@ public class PlayerScript : MonoBehaviour
             pMovement.ChangeVelocity(movementHorizontal.ReadValue<float>(), movementVertical.ReadValue<float>());
         }
 
-        if (fire.WasPressedThisFrame())
+        if (fire.IsInProgress() && pBlasters is not null)
         {
-            Debug.Log("Fire");
+            pBlasters.Fire();
         }
     }
 
