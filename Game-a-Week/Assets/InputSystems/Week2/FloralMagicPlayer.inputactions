@@ -1,6 +1,35 @@
 {
-    "version": 0,
+    "version": 1,
     "name": "FloralMagicPlayer",
-    "maps": [],
+    "maps": [
+        {
+            "name": "Interaction",
+            "id": "3da99631-d57e-4cdc-af88-284dd08227fd",
+            "actions": [
+                {
+                    "name": "Click",
+                    "type": "Button",
+                    "id": "d85277f6-f175-4586-9903-f443f6e604b5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0416cc6e-2099-4890-87a9-cd6f0d989e86",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
     "controlSchemes": []
 }

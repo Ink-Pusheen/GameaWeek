@@ -21,19 +21,24 @@ public class ScreenClickInteraction : MonoBehaviour
     {
         if (click.WasPerformedThisFrame())
         {
-            Ray newRay = Camera.main.ScreenPointToRay(Mouse.current.position.ReadDefaultValue());
+            Vector3 mos_Pos = Mouse.current.position.ReadValue();
+            Debug.Log("Click");
+            //Ray newRay = new(newRayVector, Vector3.forward);
+            Ray newRay = Camera.main.ScreenPointToRay((Vector3)Mouse.current.position.ReadValue());
 
             RaycastHit hit;
-
+            //Debug.DrawRay(Camera.main.ScreenPointToRay(Mouse.current.position.ReadDefaultValue()), Vector3.forward * 99, Color.red);
             if (Physics.Raycast(newRay, out hit, 900))
             {
                 ClickInteractable interactable = hit.collider.GetComponent<ClickInteractable>();
-
+                Debug.Log(hit.collider.name);
                 if (interactable != null)
                 {
                     interactable.Interaction();
                 }
+                
             }
+            else Debug.Log("Nothing");
         }
     }
 }
