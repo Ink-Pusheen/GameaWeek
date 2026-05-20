@@ -4,6 +4,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody rb;
 
+    public ThrusterSO activeThruster; //Scriptable object for player sakes, can be applied to enemies too
+
     public float speed;
 
     [SerializeField] float horizontalInput;
@@ -18,6 +20,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public void ApplyNewThruster()
+    {
+        speed = activeThruster.thrusterSpeed;
     }
 
     // Update is called once per frame

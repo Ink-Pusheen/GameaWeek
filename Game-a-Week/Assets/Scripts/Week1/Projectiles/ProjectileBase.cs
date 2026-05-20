@@ -10,6 +10,8 @@ public class ProjectileBase : MonoBehaviour
 
     public string Target;
 
+    public int durability; //How many bullets this can go through before diminishing
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public virtual void Start()
@@ -20,12 +22,13 @@ public class ProjectileBase : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Translate( transform.TransformDirection(new Vector3(0, 0, speed) * Time.deltaTime));
+        transform.Translate( transform.TransformDirection(new Vector3(0, 0, speed) * Time.deltaTime), Space.World);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit? " + other.name);
+        if (Target == "" || other.gameObject.CompareTag("Untagged")) return;
+
         if (other.gameObject.CompareTag(Target))
         {
             ShipHealth hitHealth = other.gameObject.GetComponent<ShipHealth>();
@@ -36,12 +39,36 @@ public class ProjectileBase : MonoBehaviour
                 return;
             }
 
+            PlayerScript player = other.GetComponent<PlayerScript>();
+
+            if (player != null) player.takenDamageCoroutine(1);
+
             hitHealth.TakenDamage(damage);
             Destroy(gameObject);
         }
-        else
+        
+        if (other.gameObject.CompareTag("SpaceshipProjectile"))
         {
-            Debug.Log("Not Target: " + other.gameObject.tag);
+            ProjectileBase otherProjectile = other.gameObject.GetComponent<ProjectileBase>();
+
+            if (otherProjectile.Target == Target) return; //If it has the same target, ignore
+
+            if (otherProjectile.damage > damage) Destroy(gameObject);
+
+            if (otherProjectile.damage == damage)
+            {
+                Destroy(other.gameObject);
+                Destroy(gameObject);
+            }
+
+            if (otherProjectile.damage < damage)
+            {
+                Destroy(other.gameObject);
+
+                durability--;
+
+                if (durability <= 0) Destroy(gameObject);
+            }
         }
     }
 

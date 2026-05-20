@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class ShipHealth : MonoBehaviour
 {
+    public ShipShellSO shipShell;
+
+    [SerializeField] AudioPlayer audPlayer;
+
+    [SerializeField] PlayerScript playerScript;
 
     [Header("Variables")]
 
@@ -13,7 +18,13 @@ public class ShipHealth : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        curHealth = maxHealth;
+        if (shipShell is null) curHealth = maxHealth;
+
+        audPlayer = GetComponentInChildren<AudioPlayer>();
+
+        playerScript = GetComponent<PlayerScript>();
+
+        if (playerScript != null) playerScript.UpdateHealthText(curHealth, maxHealth);
     }
 
     public void TakenDamage(float inDamage)
@@ -24,15 +35,39 @@ public class ShipHealth : MonoBehaviour
         {
             Debug.Log("Death of " + gameObject.name);
 
+            EnemyShipBase enemShip = GetComponent<EnemyShipBase>();
+
+            if (enemShip != null) enemShip.GrantPoints();
+
             Death();
+        }
+        else
+        {
+            if (audPlayer != null) audPlayer.PlayRandomSound(1); //Play random damaged sound
+
+            if (playerScript != null) playerScript.UpdateHealthText(curHealth, maxHealth);
         }
     }
 
-    private void Death()
+    public void Death()
     {
         //Create particle effects
         if(deathParticles != null) Instantiate(deathParticles, transform.position, Quaternion.identity);
 
+        if (audPlayer != null) audPlayer.PlayRandomSound(2); //Play random death sound
+
+        audPlayer.transform.SetParent(null);
+        audPlayer.QueueDestroy();
+
         Destroy(gameObject);
+
+        if(shipShell != null && SpaceshipRachetManager.instance != null) SpaceshipRachetManager.instance.GameOver();
+    }
+
+    public void ApplyNewShell()
+    {
+        maxHealth = shipShell.shellHealth;
+
+        curHealth = maxHealth;
     }
 }
