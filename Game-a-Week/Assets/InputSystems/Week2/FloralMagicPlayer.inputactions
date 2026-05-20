@@ -12,7 +12,7 @@
                     "id": "d85277f6-f175-4586-9903-f443f6e604b5",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 }
             ],
