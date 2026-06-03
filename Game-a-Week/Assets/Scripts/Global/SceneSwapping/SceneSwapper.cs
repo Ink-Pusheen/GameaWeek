@@ -81,4 +81,10 @@ public class SceneSwapper : MonoBehaviour
     }
 
     #endregion
+
+    public void QuitGame()
+    {
+        Debug.Log("Quit");
+        Application.Quit();
+    }
 }
