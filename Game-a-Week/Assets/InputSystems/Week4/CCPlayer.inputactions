@@ -23,6 +23,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ThrowBox",
+                    "type": "Button",
+                    "id": "6e03190f-caa9-4644-b2c4-c7dbd3c4f93c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -91,6 +100,28 @@
                     "action": "Vertical",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "ba7eb367-2793-433d-9ed0-228291807f48",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrowBox",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ddf1a141-b6f4-484d-95a6-4ef81b9618c6",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrowBox",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

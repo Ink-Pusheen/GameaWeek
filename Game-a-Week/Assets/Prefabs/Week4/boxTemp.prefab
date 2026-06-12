@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 491561136740965588}
   m_Layer: 0
   m_Name: boxTemp
-  m_TagString: Untagged
+  m_TagString: Box
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

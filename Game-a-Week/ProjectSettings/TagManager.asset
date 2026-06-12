@@ -6,6 +6,7 @@ TagManager:
   tags:
   - EnemyShip
   - SpaceshipProjectile
+  - Box
   layers:
   - Default
   - TransparentFX

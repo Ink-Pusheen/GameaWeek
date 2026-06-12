@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class GameState
@@ -81,6 +82,15 @@ public class SceneSwapper : MonoBehaviour
     }
 
     #endregion
+
+    #region Level Swapping [Unity's Scene Swap]
+
+    public void LoadUnityScene(string inNewState)
+    {
+        SceneManager.LoadScene(inNewState);
+    }
+
+    #endregion Level Swapping [Unity's Scene Swap]
 
     public void QuitGame()
     {

@@ -29,7 +29,7 @@ public class CCConveyorScript : MonoBehaviour
         if (rb is null) return; //Return if it doesn't have a rigidbody
 
         activeRigidbodies.Add(rb); //Add the rigidbody to the list
-        Debug.Log("Set direction added");
+        //Debug.Log("Set direction added"); //Testing
     }
 
     private void OnCollisionExit(Collision collision)
@@ -39,6 +39,6 @@ public class CCConveyorScript : MonoBehaviour
         if (rb is null) return; //Return if it doesn't have a rigidbody
 
         activeRigidbodies.Remove(rb); //Remove the rigidbody from the list
-        Debug.Log("Set direction removed");
+        //Debug.Log("Set direction removed"); //Testing
     }
 }
