@@ -28,6 +28,8 @@ public class SceneSwapper : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (startState == "") return; //Don't effect if this is empty
+
         DisableAllStates();
 
         EnableSpecificState(startState);
