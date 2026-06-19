@@ -6,17 +6,7 @@ public class IJaSCrown : MonoBehaviour
 {
     private IJaSHealth curInteractionTarget;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] Sprite crownedSlime; //Change the slime sprite
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -32,6 +22,8 @@ public class IJaSCrown : MonoBehaviour
             {
                 GetComponent<MeshRenderer>().enabled = false; //Hide crown and remove interaction
                 GetComponent<Collider>().enabled = false;
+
+                hitEntity.GetComponent<SpriteRenderer>().sprite = crownedSlime;
 
                 StartCoroutine("SlimeInteraction");
 

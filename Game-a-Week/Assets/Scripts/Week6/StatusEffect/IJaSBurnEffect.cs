@@ -4,6 +4,6 @@ public class IJaSBurnEffect : IJaSStatusEffect
 {
     public override void StatusEffect()
     {
-        target.TakeDamage(Random.Range(7, 16)); //Take burn damage
+        target.TakeDamage(Random.Range(3, 7)); //Take burn damage
     }
 }

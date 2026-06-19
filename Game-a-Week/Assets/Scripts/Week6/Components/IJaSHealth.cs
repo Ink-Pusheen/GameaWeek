@@ -23,6 +23,7 @@ public class IJaSHealth : MonoBehaviour
         CurHealth = MaxHealth;
 
         //Testing
+        return;
         IJaSBurnEffect effect = new();
 
         AddStatus(effect);
