@@ -12,7 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb16547d0d289f74f838103054547210, type: 3}
   m_Name: First Court
   m_EditorClassIdentifier: Assembly-CSharp::OitCCardBundle
-  DefenseQuestionLines: []
-  ProsecutorQuestionLines: []
-  DefenseCards: []
-  ProsecutorCards: []
+  DefenseQuestionLines:
+  - question: 
+    weakness: 0
+  ProsecutorQuestionLines:
+  - question: 
+    weakness: 0
+  DefenseCards:
+  - answer: 
+    cardType: 0
+  ProsecutorCards:
+  - answer: 
+    cardType: 0
