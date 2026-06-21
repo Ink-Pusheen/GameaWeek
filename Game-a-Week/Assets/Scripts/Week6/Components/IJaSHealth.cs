@@ -20,15 +20,7 @@ public class IJaSHealth : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        CurHealth = MaxHealth;
-
-        //Testing
-        return;
-        IJaSBurnEffect effect = new();
-
-        AddStatus(effect);
-
-        RunStatuses();
+        CurHealth = MaxHealth; //Set initial health
     }
 
     //Function to update the UI Healthbar
@@ -39,6 +31,7 @@ public class IJaSHealth : MonoBehaviour
         healthBar.fillAmount = CurHealth / MaxHealth; //Divide and set the fill amount
     }
 
+    //Heal target and update health bar
     public void Heal(int inHealing)
     {
         if (CurHealth + inHealing >= MaxHealth) CurHealth = MaxHealth;
@@ -48,18 +41,32 @@ public class IJaSHealth : MonoBehaviour
         UpdateUI();
     }
 
+    //Damage target and update health bar
     public void TakeDamage(int inDamage)
     {
+        if (!IJaSAttackManager.instance.bInBattle) return; //Return if it is over
+
         CurHealth -= inDamage;
 
-        if (CurHealth <= 0) Die();
+        UpdateUI();
 
-        else UpdateUI();
+        //Check if dead
+        if (CurHealth <= 0)
+        {
+            IJaSAttackManager.instance.SetBattleState(false);
+
+            Die();
+        }
     }
 
+    //Display appropriate screen afterwards
     void Die()
     {
         Debug.Log($"Die {Identifier}");
+
+        if (Identifier is "Player") SceneSwapper.instance.SwapState("LossScreen");
+
+        if(Identifier is "Slime") SceneSwapper.instance.SwapState("WinScreen");
     }
 
     //Function to multiply the specified targets health

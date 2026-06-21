@@ -19,9 +19,9 @@ public class IJaSMeteor : MonoBehaviour
 
     void RandomDirection()
     {
-        if (transform.position.x > Vector3.zero.x) rb.linearVelocity = new Vector3(-4, -5, 0);
+        if (transform.position.x > Vector3.zero.x) rb.linearVelocity = new Vector3(UnityEngine.Random.Range(-1f, -4f), -5, 0);
 
-        else if(transform.position.x < Vector3.zero.x) rb.linearVelocity = new Vector3(4, -5, 0);
+        else if(transform.position.x < Vector3.zero.x) rb.linearVelocity = new Vector3(UnityEngine.Random.Range(1f, 4f), -5, 0);
 
         else if(transform.position.x == Vector3.zero.x) rb.linearVelocity = new Vector3(UnityEngine.Random.Range(-4f, 4f), -5, 0);
     }

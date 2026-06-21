@@ -37,6 +37,9 @@ public class IJaSCrown : MonoBehaviour
 
                 //Play heal sound [Future me]
 
+                IJaSTypewriter.Instance.queuedDialogue.Add("The Slime got full healed from the crown!");
+                IJaSTypewriter.Instance.DisplayDialogue();
+
                 Destroy(gameObject);
             }
 
@@ -44,12 +47,18 @@ public class IJaSCrown : MonoBehaviour
             {
                 hitEntity.TakeDamage(15);
 
+                IJaSTypewriter.Instance.queuedDialogue.Add("The player took 15 damage from the bonk of the crown!");
+                IJaSTypewriter.Instance.DisplayDialogue();
+
                 Destroy(gameObject);
             }
         }
         else
         {
             Debug.Log($"Womp womp, {collision.gameObject.name}");
+
+            IJaSTypewriter.Instance.queuedDialogue.Add("The fallng crown missed!");
+            IJaSTypewriter.Instance.DisplayDialogue();
 
             Destroy(gameObject);
         }
@@ -75,8 +84,10 @@ public class IJaSCrown : MonoBehaviour
 
         yield return new WaitForSeconds(0.15f);
 
-
         curInteractionTarget.gameObject.transform.parent.transform.localScale = new Vector3(5f, 5f, 5f);
+
+        IJaSTypewriter.Instance.queuedDialogue.Add("The Slime grew from the crown!");
+        IJaSTypewriter.Instance.DisplayDialogue();
 
         Destroy(gameObject);
     }

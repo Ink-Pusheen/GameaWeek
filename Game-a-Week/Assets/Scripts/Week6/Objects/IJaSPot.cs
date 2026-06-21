@@ -17,16 +17,24 @@ public class IJaSPot : MonoBehaviour
             if (hitEntity.Identifier is "Slime")
             {
                 hitEntity.TakeDamage(15);
+
+                IJaSTypewriter.Instance.queuedDialogue.Add("The slime took 15 damage from the pot!");
+                IJaSTypewriter.Instance.DisplayDialogue();
             }
 
             if (hitEntity.Identifier is "Player")
             {
                 hitEntity.TakeDamage(15);
+                IJaSTypewriter.Instance.queuedDialogue.Add("The player took 15 damage from the pot!");
+                IJaSTypewriter.Instance.DisplayDialogue();
             }
         }
         else
         {
             Debug.Log($"Womp womp, {collision.gameObject.name}");
+
+            IJaSTypewriter.Instance.queuedDialogue.Add("The falling pot missed!");
+            IJaSTypewriter.Instance.DisplayDialogue();
 
             Destroy(gameObject);
         }
