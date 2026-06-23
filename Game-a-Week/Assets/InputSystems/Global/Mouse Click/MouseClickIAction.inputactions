@@ -1,0 +1,55 @@
+{
+    "version": 1,
+    "name": "MouseClickIAction",
+    "maps": [
+        {
+            "name": "ClickInteraction",
+            "id": "5e3e5084-01b6-4e1b-9a6e-fe9d3c0d1d0b",
+            "actions": [
+                {
+                    "name": "LeftClick",
+                    "type": "Button",
+                    "id": "ab290cac-03b8-44f2-8e9c-07bf71ebe30f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "f10380a2-8889-4046-b9e2-7b8a458f81f4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "beaca393-6a0a-41c7-9904-998daae895fe",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88a6a6ee-1f56-4e30-a1e9-e890b33b6fc9",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
