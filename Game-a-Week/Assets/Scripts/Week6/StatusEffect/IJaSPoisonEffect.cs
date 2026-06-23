@@ -4,6 +4,11 @@ public class IJaSPoisonEffect : IJaSStatusEffect
 {
     [SerializeField] int remainingHits = 2;
 
+    public override void SetupStatus()
+    {
+        statusType = "Poison";
+    }
+
     public override void StatusEffect()
     {
         int damageDealt = Random.Range(4, 9);

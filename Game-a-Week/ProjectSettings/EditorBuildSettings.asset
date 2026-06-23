@@ -20,9 +20,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Cardboard Chain.unity
     guid: 186186cfcbbdc1949bff638dbbf53930
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Feathers A' Blazin.unity
     guid: 3acd229b3e7b3784eb22dfcadb7d1f03
+  - enabled: 1
+    path: Assets/Scenes/It's Just a Slime.unity
+    guid: 36ad909de63ffb74ab431d00531a8d7c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

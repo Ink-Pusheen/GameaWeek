@@ -72,6 +72,7 @@ public class IJaSAttackManager : MonoBehaviour
             case 0: //Fire
                 Debug.Log("Fire Attack");
                 IJaSBurnEffect appliedBurn = new();
+                appliedBurn.SetupStatus();
 
                 if(target is 0) //Target is Player
                 {
@@ -92,9 +93,16 @@ public class IJaSAttackManager : MonoBehaviour
 
             case 1: //Blizzard
                 Debug.Log("Blizzard Attack");
-                //Damage all
+                //Clear all Fire
 
                 typeWriter.queuedDialogue.Add($"It got colder...?");
+                typeWriter.queuedDialogue.Add("All fire effects removed!");
+
+                IJaSBurnEffect burn = new();
+                burn.SetupStatus();
+
+                pHealth.RemoveStatus("Burn");
+                sHealth.RemoveStatus("Burn");
 
                 IJaSTypewriter.Instance.DisplayDialogue();
 
@@ -137,6 +145,7 @@ public class IJaSAttackManager : MonoBehaviour
             case 4: //Poison
                 Debug.Log("Poison");
                 IJaSPoisonEffect appliedPoison = new();
+                appliedPoison.SetupStatus();
 
                 if (target is 0)
                 {
