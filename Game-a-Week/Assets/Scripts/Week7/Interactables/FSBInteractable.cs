@@ -21,4 +21,12 @@ public abstract class FSBInteractable : MonoBehaviour
 
     //Function for the on click interaction
     public abstract void OnClickInteraction(FSBPlayer player);
+
+    //Function to check for interaction compatability
+    public bool CheckInteractionCompatability(string inInteractingItem)
+    {
+        if (WhatCanInteract.Contains(inInteractingItem)) return true;
+
+        else return false;
+    }
 }

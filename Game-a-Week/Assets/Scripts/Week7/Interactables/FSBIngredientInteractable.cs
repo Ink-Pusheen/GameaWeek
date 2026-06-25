@@ -19,6 +19,9 @@ public class FSBIngredientInteractable : FSBInteractable
 
         if (cup is not null)
         {
+            //Check if this can be interacted with
+            if (!CheckInteractionCompatability(cup.identification)) return; //Return if not
+
             //For loop to ensure that the base ingredient can go in without overlapping others or being added if another exists
             bool UnoverlapableIngredient = false;
 
