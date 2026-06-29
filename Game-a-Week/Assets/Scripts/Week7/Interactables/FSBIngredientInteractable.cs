@@ -44,10 +44,14 @@ public class FSBIngredientInteractable : FSBInteractable
                 if(!hasIngredient) return; //Return if it doesn't have any of the specified ingredients
 
                 cup.containedIngredients.Add(IngredientIdentity);
+
+                cup.UpdateSprite(); //Update the sprite
             }
             else
             {
                 cup.containedIngredients.Add(IngredientIdentity);
+
+                cup.UpdateSprite(); //Update the sprite
             }
         }
     }

@@ -7,19 +7,15 @@ public class CatCustomer : AnimalCustomerBase
     void Start()
     {
         RequestedOrder = OrderManager.instance.RandomCatRecipe();
+
+        DisplayOrder(); //Display the requested order
     }
 
     public override void OnClickInteraction(FSBPlayer player)
     {
         Debug.Log("Cat Click");
 
-        if (player.ReturnHeldItem() is null || RequestedOrder is null) return;
-
-        FSBCupInteractable cup = player.ReturnHeldItem().GetComponent<FSBCupInteractable>();
-
-        if (cup is null) return;
-
-        CheckOrder(cup.containedIngredients, cup);
+        base.OnClickInteraction(player);
     }
 
     public override void CheckOrder(List<string> ingredientsToCheck, FSBCupInteractable cup)
@@ -30,5 +26,7 @@ public class CatCustomer : AnimalCustomerBase
         if (matches) PositiveReview(); //Positive for getting it right
 
         else if (!matches) NegativeReview(); //Negative for getting something wrong
+
+        Invoke("ToggleExitState", 2); //Toggle the exit state
     }
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3089480452953538787}
   - component: {fileID: 3446784859656142763}
   - component: {fileID: 4784468173233520835}
-  - component: {fileID: 6082854279968545916}
   m_Layer: 0
   m_Name: CatCup
   m_TagString: Untagged
@@ -83,7 +82,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 21300000, guid: 37553a926c66ed44da877d03c53fcbfb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cb7df8163924d8b44a04910c18c37057, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,24 +108,3 @@ MonoBehaviour:
   identification: Cat Cup
   CupToSpawn: {fileID: 0}
   containedIngredients: []
---- !u!65 &6082854279968545916
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4471909545976176487}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.2800001, y: 0.763384, z: 0.10000001}
-  m_Center: {x: 0, y: -0.2583081, z: 0}

@@ -32,4 +32,47 @@ public class OrderManager : MonoBehaviour
 
         return DogRecipes[chosenRecipe];
     }
+
+    public Sprite CompareCatCup(List<string> inIngredients)
+    {
+        for (int recipe = 0; recipe < CatRecipes.Count; recipe++)
+        {
+            if (inIngredients.Count != CatRecipes[recipe].RequiredItems.Count) continue;
+
+            int matches = 0;
+
+            for (int ingredient = 0; ingredient < inIngredients.Count; ingredient++)
+            {
+                if (CatRecipes[recipe].RequiredItems.Contains(inIngredients[ingredient])) matches++;
+            }
+
+            if (matches != CatRecipes[recipe].RequiredItems.Count) continue;
+
+            else return CatRecipes[recipe].RequestSprite;
+        }
+
+        return null;
+    }
+
+    public Sprite CompeareDogCup(List<string> inIngredients)
+    {
+        for (int recipe = 0; recipe < DogRecipes.Count; recipe++)
+        {
+            if (inIngredients.Count != DogRecipes[recipe].RequiredItems.Count) continue;
+
+            int matches = 0;
+
+            for (int ingredient = 0; ingredient < inIngredients.Count; ingredient++)
+            {
+                if (DogRecipes[recipe].RequiredItems.Contains(inIngredients[ingredient])) matches++;
+            }
+
+            if (matches != DogRecipes[recipe].RequiredItems.Count) continue;
+
+            else return DogRecipes[recipe].RequestSprite;
+        }
+
+        return null;
+    }
+
 }

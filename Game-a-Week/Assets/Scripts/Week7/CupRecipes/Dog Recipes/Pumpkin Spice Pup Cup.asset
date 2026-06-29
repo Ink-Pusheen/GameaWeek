@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 99b59fc240347c74a9d89d6a012f8a42, type: 3}
-  m_Name: Traditional Pup Cup
+  m_Name: Pumpkin Spice Pup Cup
   m_EditorClassIdentifier: Assembly-CSharp::FSBRecipeSO
-  RequestSprite: {fileID: 0}
+  RequestSprite: {fileID: 21300000, guid: 769e9a631a83aee4cb3c96966471d4d5, type: 3}
   RequiredItems:
   - Whipped Cream
-  MoneyGranted: 5
+  - Pumpkin Puree
+  - Cinnamon
+  MoneyGranted: 0

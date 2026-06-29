@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -35,5 +36,16 @@ public class FSBCupInteractable : FSBInteractable
     void Update()
     {
         
+    }
+
+    public void UpdateSprite()
+    {
+        if (containedIngredients.Count is 0) return;
+
+        //Compare the list and change the sprite accordingly as long as there is one ingredient
+
+        if (identification is "Dog Cup") GetComponent<SpriteRenderer>().sprite = OrderManager.instance.CompeareDogCup(containedIngredients);
+
+        else if (identification is "Cat Cup") GetComponent<SpriteRenderer>().sprite = OrderManager.instance.CompareCatCup(containedIngredients);
     }
 }
