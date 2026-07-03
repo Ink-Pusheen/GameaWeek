@@ -4,6 +4,7 @@ using TMPro;
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using UnityEngine.InputSystem;
 
 [Serializable]
 class State
@@ -17,6 +18,12 @@ class State
 
 public class MMGameManager : MonoBehaviour
 {
+    [Header("Hotkeys")]
+
+    private PlayerInput pInput;
+
+    private InputAction clearInput;
+
     [Header("Information Lists")]
 
     [SerializeField] List<State> States = new(); //List of states
@@ -54,6 +61,16 @@ public class MMGameManager : MonoBehaviour
     [SerializeField] TMP_Text hintText; //Text to display the state to the player, will also be used as the final reveal when the game is lost
     [SerializeField] Button hintButton; //The hint button
 
+
+    private void Start()
+    {
+        pInput = GetComponent<PlayerInput>();
+
+        if (pInput is null) return;
+
+        clearInput = pInput.actions.FindAction("Clear");
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -67,6 +84,8 @@ public class MMGameManager : MonoBehaviour
         if (RemainingTime > 15) hintButton.interactable = true;
 
         else hintButton.interactable = false;
+
+        if (clearInput.WasPerformedThisFrame()) inputField.text = ""; //Clear the input field
     }
 
     public void StartGame()
@@ -156,7 +175,8 @@ public class MMGameManager : MonoBehaviour
             //Display the ending screen
             SceneSwapper.instance.SwapState("Post-Game");
 
-            endText.text = $"Congradulations, you named all the states within {ResetTime} seconds!";
+            //endText.text = $"Congradulations, you named all the states within {ResetTime} seconds!";
+            endText.text = $"Congradulations, you named all the states in {(ResetTime - RemainingTime).ToString("F2")} seconds! Starting at {ResetTime} seconds.";
             endText.color = Color.aquamarine;
         }
         
@@ -281,6 +301,13 @@ public class MMGameManager : MonoBehaviour
 
                 RemainingTime = 60;
                 ResetTime = 60;
+
+                break;
+
+            case 5: //Baby mode (1 hr)
+
+                RemainingTime = 3600;
+                ResetTime = 3600;
 
                 break;
         }

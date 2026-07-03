@@ -26,9 +26,12 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/It's Just a Slime.unity
     guid: 36ad909de63ffb74ab431d00531a8d7c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Furlicious Sweet Bar.unity
     guid: 4b3b8ed25f8ec35469661b5b41519e64
+  - enabled: 1
+    path: Assets/Scenes/Merica Minute.unity
+    guid: c8473c72b76334f48b70c5b77c058cdb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

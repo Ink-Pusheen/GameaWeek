@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "MMHotkeys",
+    "maps": [
+        {
+            "name": "Hotkeys",
+            "id": "38791217-a930-4fa5-ae0a-d9a0608a1c5d",
+            "actions": [
+                {
+                    "name": "Clear",
+                    "type": "Button",
+                    "id": "0b759a49-59cf-4061-b04a-7ec230ded8e3",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f7bb20ca-f5d0-4605-a399-ce0afceb5d3f",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Clear",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
