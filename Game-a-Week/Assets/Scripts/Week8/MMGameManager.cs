@@ -2,14 +2,28 @@ using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
+using System;
+
+[Serializable]
+class State
+{
+    public string name;
+
+    public float imageWidth;
+
+    public Sprite imageSprite;
+}
 
 public class MMGameManager : MonoBehaviour
 {
     [Header("Information Lists")]
 
-    [SerializeField] List<string> names = new(); //List of state names
+    [SerializeField] List<State> States = new(); //List of states
 
-    [SerializeField] List<string> roundList = new(); //List for the current active rotation
+    [SerializeField] List<State> roundStates = new();//List for the current active rotation
+
+    [SerializeField] Image curState; //Display of the current state
 
 
     [Header("Player Input")]
@@ -33,6 +47,12 @@ public class MMGameManager : MonoBehaviour
 
     [SerializeField] TMP_Text inputPlaceholderText; //Grey text that displays in the text box
 
+    [SerializeField] TMP_Text remainingText; //How many inputs remain during the ronud
+
+    [SerializeField] TMP_Text endText; //Text to display how the player did
+
+    [SerializeField] TMP_Text hintText; //Text to display the state to the player, will also be used as the final reveal when the game is lost
+    [SerializeField] Button hintButton; //The hint button
 
     // Update is called once per frame
     void Update()
@@ -42,6 +62,11 @@ public class MMGameManager : MonoBehaviour
         RemainingTime -= Time.deltaTime;
 
         UpdateTimer();
+
+        //Change the hint button state based on how much time the player has remaining
+        if (RemainingTime > 15) hintButton.interactable = true;
+
+        else hintButton.interactable = false;
     }
 
     public void StartGame()
@@ -59,11 +84,13 @@ public class MMGameManager : MonoBehaviour
     {
         inputPlaceholderText.text = ""; //Keep this empty while the game is going
 
-        roundList.Clear(); //Clear the prior list if any data still exists
+        roundStates.Clear(); //Clear the prior list if any data still exists
 
-        roundList = CreateRandomizedList(); //Create the new list
+        roundStates = CreateRandomizedList(); //Create the new lists
 
-        neededInput = roundList[0]; //Assign the initial state
+        remainingText.text = roundStates.Count.ToString(); //Initialize the remaining text
+
+        neededInput = roundStates[0].name; //Assign the initial state
 
         StartCoroutine("CountDownTimer");
     }
@@ -84,42 +111,61 @@ public class MMGameManager : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        SceneSwapper.instance.SwapState("Main-Game"); //Swap to the main game state
+
         bRunTimer = true; //Start the timer
+
+        curState.enabled = true; //Enable the image
+        curState.sprite = roundStates[0].imageSprite; //Display the next sprite
+        curState.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, roundStates[0].imageWidth); //Adjust the width
     }
 
-    List<string> CreateRandomizedList()
+    List<State> CreateRandomizedList()
     {
-        List<string> copyString = new(names); //Create a duplicate
+        List<State> copyStates = new(States); //Create a duplicate of each list
 
-        List<string> randomizedString = new();
+        List<State> randomizedStates = new();
 
-        for (int state = names.Count; state > 0; state--)
+        for (int state = States.Count; state > 0; state--)
         {
-            int selection = Random.Range(0, copyString.Count);
+            int selection = UnityEngine.Random.Range(0, copyStates.Count);
 
-            randomizedString.Add(copyString[selection]);
+            randomizedStates.Add(copyStates[selection]);
 
-            copyString.RemoveAt(selection);
+            copyStates.RemoveAt(selection);
         }
 
-        return randomizedString;
+        return randomizedStates;
     }
 
     void ProceedList()
     {
-        roundList.RemoveAt(0);
+        roundStates.RemoveAt(0); //Remove the index
+
+        remainingText.text = roundStates.Count.ToString(); //Update the remaining text
 
         inputField.text = ""; //Reset the input
 
-        if (roundList.Count is 0)
+        hintText.text = ""; //Reset the hint text
+
+        if (roundStates.Count is 0)
         {
             bRunTimer = false; //Stop the timer
+            curState.enabled = false; //Hide the sprite
 
             //Display the ending screen
-            SceneSwapper.instance.EnableSpecificState("Post-Game");
-        }
+            SceneSwapper.instance.SwapState("Post-Game");
 
-        else neededInput = roundList[0];
+            endText.text = $"Congradulations, you named all the states within {ResetTime} seconds!";
+            endText.color = Color.aquamarine;
+        }
+        
+        else
+        {
+            neededInput = roundStates[0].name;
+            curState.sprite = roundStates[0].imageSprite; //Display the next sprite
+            curState.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, roundStates[0].imageWidth); //Adjust the width
+        }
     }
 
     void UpdateTimer()
@@ -141,7 +187,7 @@ public class MMGameManager : MonoBehaviour
         else timerText.color = Color.black; //Else black text to keep em calm
 
         //Game over condition
-        if(seconds <= 0 && minutes is 0)
+        if(seconds <= 0 && minutes is 0 || RemainingTime < 0)
         {
             bRunTimer = false; //Disable the timer
 
@@ -149,14 +195,23 @@ public class MMGameManager : MonoBehaviour
 
             timerText.color = Color.red; //Ensure it is red
 
-            SceneSwapper.instance.EnableSpecificState("Post-Game"); //Display the end screen
+            SceneSwapper.instance.SwapState("Post-Game"); //Display the end screen
+
+            endText.text = $"Unfortunate, you ran out of time. You can always try again.";
+            endText.color = Color.red;
+
+            hintText.text = $"{roundStates[0].name}";
         }
     }
 
     //Function for whenever the player inputs anything into the text box
     public void OnInputTextBoxChanged()
     {
-        if (!bRunTimer) return; //No input until the timer is tickin buddy
+        if (!bRunTimer) //No input until the timer is tickin buddy
+        {
+            inputField.text = ""; //Clear the input
+            return;
+        }
 
         inputField.text = inputField.text.ToUpper(); //Capitalize all characters
 
@@ -167,6 +222,26 @@ public class MMGameManager : MonoBehaviour
         {
             ProceedList(); //Proceed to next index
         }
+    }
+
+    //Function to forfeit the game
+    public void Forfeit()
+    {
+        if (!bRunTimer) return; //No click without timer
+
+        RemainingTime = -999; //Remove all time, womp womp
+    }
+
+    //Function to display a hint to the player [as long as they have enough time
+    public void DisplayHint()
+    {
+        if (!bRunTimer) return; //I said no timer, no click
+
+        if (hintText.text != "") return; //Don't allow action if it is already revealed
+
+        hintText.text = $"{roundStates[0].name}";
+
+        RemainingTime -= 15; //Remove 15 seconds from the timer
     }
 
     //Function to update the allocated amount of time the player has in their round
@@ -214,7 +289,7 @@ public class MMGameManager : MonoBehaviour
     //Function to reset the game
     public void ResetGame()
     {
-        roundList.Clear(); //Clear the round list to ensure nothing remains
+        roundStates.Clear(); //Clear the round list to ensure nothing remains
 
         //Swap the scenes
         SceneSwapper.instance.DisableAllStates();
@@ -222,8 +297,19 @@ public class MMGameManager : MonoBehaviour
 
         //Reset the text fields
         timerText.text = "*Pending Game Start*";
+        timerText.color = Color.black;
         inputPlaceholderText.text = "PRESS TO PLAY";
+        remainingText.text = "-";
+        inputField.text = "";
+        hintText.text = "";
+
+        //Reset the display image
+        curState.enabled = false; //Hide the sprite
 
         //Reset the timer
+        RemainingTime = ResetTime;
+
+        //Reset game state
+        bInGame = false;
     }
 }

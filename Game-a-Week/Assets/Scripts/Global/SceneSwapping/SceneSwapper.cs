@@ -70,6 +70,7 @@ public class SceneSwapper : MonoBehaviour
         }
     }
 
+    [Tooltip("This will loop through all given states and only enable the input string")]
     public void SwapState(string inNewState)
     {
         for(int state = 0; state < states.Length; state++)
