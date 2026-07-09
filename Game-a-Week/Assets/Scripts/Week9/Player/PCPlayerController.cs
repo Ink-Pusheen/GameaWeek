@@ -12,11 +12,13 @@ public class PCPlayerController : MonoBehaviour
     [SerializeField] float InteractionRange; //How far the interaction goes
 
     private InputAction dash; //Input action for the player to dash
+    [SerializeField] float dashPower; //How much power to the dash
 
     private InputAction horizontal; //Input action for grabbing the horizontal input
     private InputAction vertical; //Input action for grabbing the vertical input
 
     [SerializeField] float MoveSpeed; //Movespeed of the player
+    [SerializeField] float baseMoveSpeed; //Base speed of the player
     [SerializeField] GameObject RotateTowards; //Invisible guide to rotate the player
     [SerializeField] GameObject StartRotationPosition; //Where the guide will start
 
@@ -44,6 +46,8 @@ public class PCPlayerController : MonoBehaviour
         }
 
         rb = GetComponent<Rigidbody>();
+
+        baseMoveSpeed = MoveSpeed; //Sets the initial movespeed
     }
 
     // Update is called once per frame
@@ -78,6 +82,22 @@ public class PCPlayerController : MonoBehaviour
             }
         }
 
+        //Functionality of dash
+        if(dash.WasPressedThisFrame())
+        {
+            MoveSpeed = dashPower; //Set movespeed to the dash power;
+
+            rb.AddForce(transform.forward * dashPower, ForceMode.Impulse); //Add the force
+        }
+
+        //Once player dashes, this will have to be addressed
+        if (MoveSpeed > baseMoveSpeed)
+        {
+            MoveSpeed -= 6f * Time.deltaTime; //Deteriorate the speed boost
+
+            if (MoveSpeed <= baseMoveSpeed) MoveSpeed = baseMoveSpeed; //Reset the speed
+        }
+
         //Functionality of movement
         if (horizontal.IsPressed() || vertical.IsPressed())
         {
@@ -102,7 +122,10 @@ public class PCPlayerController : MonoBehaviour
     {
         Vector3 MoveVector = new Vector3(inHorizontal, 0, inVertical).normalized * MoveSpeed;
 
-        rb.linearVelocity = MoveVector;
+        rb.AddForce(MoveVector * MoveSpeed, ForceMode.Force);
+
+        rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, MoveSpeed);
+        //rb.linearVelocity = MoveVector;
     }
 
     void UpdateRotation(float horizontal, float vertical)
