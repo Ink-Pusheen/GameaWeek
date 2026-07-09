@@ -2,5 +2,5 @@ using UnityEngine;
 
 public abstract class PCInteractable : MonoBehaviour
 {
-    public abstract void OnInteract();
+    public abstract void OnInteract(PCPlayerController player);
 }

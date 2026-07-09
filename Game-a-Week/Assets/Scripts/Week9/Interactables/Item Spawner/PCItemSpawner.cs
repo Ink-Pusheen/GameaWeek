@@ -4,7 +4,7 @@ public class PCItemSpawner : PCInteractable
 {
     [SerializeField] GameObject goItemToSpawn; //What item should this spawner give?
 
-    public override void OnInteract()
+    public override void OnInteract(PCPlayerController player)
     {
         Debug.Log("Spawn item");
 
@@ -13,7 +13,7 @@ public class PCItemSpawner : PCInteractable
         //Check if the players hands are empty
 
         //If not spawn the item in the players hands
-        GameObject SpawnedObject = Instantiate(goItemToSpawn, transform.position + new Vector3(0, 0.5f, 0), Quaternion.identity); //Replace the spawn position to the player hands later
+        GameObject SpawnedObject = Instantiate(goItemToSpawn, player.holdItemSpot.transform.position, Quaternion.identity); //Replace the spawn position to the player hands later
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
