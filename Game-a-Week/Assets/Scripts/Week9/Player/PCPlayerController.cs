@@ -8,6 +8,9 @@ public class PCPlayerController : MonoBehaviour
     private PlayerInput pInput; //Source of the player input mapping
 
     private InputAction interact; //Input action to interact with the environment
+    [SerializeField] GameObject InteractionPoint; //Gameobject the raycast will fire
+    [SerializeField] float InteractionRange; //How far the interaction goes
+
     private InputAction dash; //Input action for the player to dash
 
     private InputAction horizontal; //Input action for grabbing the horizontal input
@@ -30,7 +33,7 @@ public class PCPlayerController : MonoBehaviour
     {
         pInput = GetComponent<PlayerInput>(); //Get the player input
 
-        if(pInput is not null)
+        if (pInput is not null)
         {
             //Get the input actions from the mapping
             interact = pInput.actions.FindAction("Interact");
@@ -46,27 +49,60 @@ public class PCPlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(InteractionPoint.transform.position, InteractionPoint.transform.forward * InteractionRange, Color.red);
+
         //Functionality of getting the interaction
-        if(interact.WasPressedThisFrame())
+        if (interact.WasPressedThisFrame())
         {
-            Debug.Log("Interaction");
+            // Debug.Log("Interaction"); // Testing
+
+            Ray outRay = new Ray();
+            outRay.origin = InteractionPoint.transform.position;
+            outRay.direction = InteractionPoint.transform.forward;
+
+            RaycastHit hit;
+
+            if (Physics.Raycast(outRay, out hit, InteractionRange))
+            {
+                //Debug.Log($"Hit: {hit.collider.name}");
+
+                PCInteractable hitInteractable = hit.collider.GetComponent<PCInteractable>();
+
+                if (hitInteractable is null) return; //Don do anything if this is null
+
+                hitInteractable.OnInteract(this); //Run the interaction script on the object
+            }
+            else
+            {
+                Debug.Log("No Hit");
+            }
         }
 
         //Functionality of movement
-        if(horizontal.IsPressed() || vertical.IsPressed())
+        if (horizontal.IsPressed() || vertical.IsPressed())
         {
             float horiz = horizontal.ReadValue<float>();
             float vert = vertical.ReadValue<float>();
 
-            rb.linearVelocity = new Vector3(horiz * MoveSpeed, 0, vert * MoveSpeed);
+            MovePlayer(horiz, vert); //Move the player
 
             UpdateRotation(horiz, vert); //Update the user rotation
         }
 
-        if(horizontal.WasReleasedThisFrame() || vertical.WasReleasedThisFrame())
+        if (horizontal.WasReleasedThisFrame() || vertical.WasReleasedThisFrame())
         {
-            rb.linearVelocity = new Vector3(horizontal.ReadValue<float>() * MoveSpeed, 0, vertical.ReadValue<float>() * MoveSpeed);
+            float horiz = horizontal.ReadValue<float>();
+            float vert = vertical.ReadValue<float>();
+
+            MovePlayer(horiz, vert); //Move the player
         }
+    }
+
+    void MovePlayer(float inHorizontal, float inVertical)
+    {
+        Vector3 MoveVector = new Vector3(inHorizontal, 0, inVertical).normalized * MoveSpeed;
+
+        rb.linearVelocity = MoveVector;
     }
 
     void UpdateRotation(float horizontal, float vertical)
@@ -88,4 +124,15 @@ public class PCPlayerController : MonoBehaviour
         transform.rotation = lookRotation;
     }
 
+    public void ChangeHeldItem(GameObject inNewItem)
+    {
+        heldItem = inNewItem;
+
+        if (heldItem != null)
+        {
+            heldItem.transform.position = holdItemSpot.transform.position; //Set the position and parent
+            heldItem.transform.rotation = holdItemSpot.transform.rotation;
+            heldItem.transform.SetParent(holdItemSpot.transform);
+        }
+    }
 }

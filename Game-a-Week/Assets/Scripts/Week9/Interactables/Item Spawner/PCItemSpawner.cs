@@ -9,24 +9,11 @@ public class PCItemSpawner : PCInteractable
         Debug.Log("Spawn item");
 
         if (goItemToSpawn == null) return; //Don't do anything if this is currently null
-
-        //Check if the players hands are empty
+        if (player.heldItem != null) return; //Don't give an item if the player is currently holding something
 
         //If not spawn the item in the players hands
-        GameObject SpawnedObject = Instantiate(goItemToSpawn, player.holdItemSpot.transform.position, Quaternion.identity); //Replace the spawn position to the player hands later
+        GameObject SpawnedObject = Instantiate(goItemToSpawn, player.holdItemSpot.transform.position, Quaternion.identity);
+
+        player.ChangeHeldItem(SpawnedObject);
     }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-
 }
