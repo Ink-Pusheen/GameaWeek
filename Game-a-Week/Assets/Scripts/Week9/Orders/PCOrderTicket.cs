@@ -39,15 +39,11 @@ public class PCOrderTicket : MonoBehaviour
 
         if(timeRemaining <= 0)
         {
+            //Stop the timer
+            bRunTimer = false;
+
             Debug.Log("Ticket Expired");
-
-            //Remove the ticket from the manager so it cannot count points
-            if (PCOrderManager.Instance != null)
-            {
-                PCOrderManager.Instance.RemoveTicket(this);
-            }
-
-            bTicketRemoved = true;
+            panel.color = Color.red; //Display red before deletion
 
             //Subtract score
             PCOrderManager.Instance.UpdateScore(-20); //Lose 20, womp womp
@@ -102,7 +98,7 @@ public class PCOrderTicket : MonoBehaviour
     //Function to check if the contents of a box match the order ticket
     public bool FulfilsTicket(PCCardboardBox inBox)
     {
-        if (inBox.contents.Count != RequiredContents.Count) return false;
+        if (inBox.contents.Count != RequiredContents.Count || !bRunTimer) return false;
 
         int matches = 0;
 

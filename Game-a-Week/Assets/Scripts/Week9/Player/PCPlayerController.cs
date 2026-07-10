@@ -13,6 +13,7 @@ public class PCPlayerController : MonoBehaviour
 
     private InputAction dash; //Input action for the player to dash
     [SerializeField] float dashPower; //How much power to the dash
+    [SerializeField] float dashDecayRate; //How fast player speed returns to normal
 
     private InputAction horizontal; //Input action for grabbing the horizontal input
     private InputAction vertical; //Input action for grabbing the vertical input
@@ -29,12 +30,18 @@ public class PCPlayerController : MonoBehaviour
     public GameObject heldItem; //What is the currently held item?
     public GameObject holdItemSpot; //Where the item is being is held
 
+    [SerializeField] GameObject leftHand; //Player left hand
+    [SerializeField] GameObject rightHand; //Player right hand
+
+    [SerializeField] GameObject leftHandOrigin; //Where the left hand usually floats
+    [SerializeField] GameObject rightHandOrigin; //Where the right hand usually floats
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         pInput = GetComponent<PlayerInput>(); //Get the player input
-
+        //Debug.Log(pInput);
         if (pInput is not null)
         {
             //Get the input actions from the mapping
@@ -48,6 +55,12 @@ public class PCPlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         baseMoveSpeed = MoveSpeed; //Sets the initial movespeed
+
+        //Add self to the Round Manager instance
+        PCRoundManager.instance.players.Add(this);
+
+        //Deactivate the player input after everything is assigned
+        pInput.enabled = false;
     }
 
     // Update is called once per frame
@@ -93,7 +106,7 @@ public class PCPlayerController : MonoBehaviour
         //Once player dashes, this will have to be addressed
         if (MoveSpeed > baseMoveSpeed)
         {
-            MoveSpeed -= 6f * Time.deltaTime; //Deteriorate the speed boost
+            MoveSpeed -= dashDecayRate * Time.deltaTime; //Deteriorate the speed boost
 
             if (MoveSpeed <= baseMoveSpeed) MoveSpeed = baseMoveSpeed; //Reset the speed
         }
@@ -115,6 +128,11 @@ public class PCPlayerController : MonoBehaviour
             float vert = vertical.ReadValue<float>();
 
             MovePlayer(horiz, vert); //Move the player
+        }
+        
+        if (!horizontal.IsPressed() && !vertical.IsPressed() && MoveSpeed == baseMoveSpeed)
+        {
+            rb.linearVelocity = Vector3.zero;
         }
     }
 
@@ -156,6 +174,49 @@ public class PCPlayerController : MonoBehaviour
             heldItem.transform.position = holdItemSpot.transform.position; //Set the position and parent
             heldItem.transform.rotation = holdItemSpot.transform.rotation;
             heldItem.transform.SetParent(holdItemSpot.transform);
+
+            PCItem itemInHand = heldItem.GetComponent<PCItem>(); //Get the component if it exists
+
+            if (itemInHand is not null) //Ensure it isn't null
+            {
+                itemInHand.SetPlayerHandPosition(this); //Call to the new item to set the hand positions
+            }
         }
+
+        else if (heldItem == null) //If null, reset the player hand positions
+        {
+            ResetHandPositions();
+        }
+    }
+
+
+    //Turn on the input
+    public void EnableInput()
+    {
+        pInput.enabled = true;
+    }
+
+    //Turn off the input
+    public void DisableInput()
+    {
+        pInput.enabled = false;
+    }
+
+
+    //Hand Functions
+
+    //Set the hand positions when an item is grabbed
+    public void SetHandPositions(GameObject left, GameObject right)
+    {
+        leftHand.transform.position = left.transform.position;
+        rightHand.transform.position = right.transform.position;
+    }
+
+
+    //Reset the hand positions
+    public void ResetHandPositions()
+    {
+        leftHand.transform.position = leftHandOrigin.transform.position;
+        rightHand.transform.position = rightHandOrigin.transform.position;
     }
 }

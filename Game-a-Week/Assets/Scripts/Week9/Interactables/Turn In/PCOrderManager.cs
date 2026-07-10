@@ -136,7 +136,7 @@ public class PCOrderManager : MonoBehaviour
     {
         for (int order = shiftIndex; order < activeOrders.Count; order++)
         {
-            Vector3 newPosition = activeOrders[order].gameObject.transform.position - new Vector3(350, 0, 0);
+            Vector3 newPosition = activeOrders[order].gameObject.transform.position - new Vector3(500, 0, 0);
 
             activeOrders[order].transform.position = newPosition;
         }
@@ -156,5 +156,20 @@ public class PCOrderManager : MonoBehaviour
     public void UpdateScoreDisplay()
     {
         pointsText.text = gainedPoints.ToString();
+    }
+
+    //Function to grab the score
+    public int CurrentScore()
+    {
+        return gainedPoints;
+    }
+
+
+    //Public function to start all workings and reset the first ticket time
+    public void StartGameFunctionality()
+    {
+        lastOrderTime = Time.time; //Reset the time
+
+        bRunTimer = true; //Start the timer
     }
 }

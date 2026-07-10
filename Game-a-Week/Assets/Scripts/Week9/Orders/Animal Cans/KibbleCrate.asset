@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c030d10c15bb81d45b7911d2a45d4c72, type: 3}
   m_Name: KibbleCrate
   m_EditorClassIdentifier: Assembly-CSharp::PCOrder
-  deliveryTimeAllowed: 120
+  deliveryTimeAllowed: 60
   orderContent:
   - itemName: Kibble Can
     itemQuantity: 0
     rangedQuantity: 1
     lowerRequest: 1
     upperRequest: 3
-    displaySprite: {fileID: 21300000, guid: 51220b614007a0e4894ff96748f89be4, type: 3}
+    displaySprite: {fileID: 21300000, guid: 48107118252f100408502d48292cc3c0, type: 3}
   rewardAmount: 5
   hasRandomizedAmounts: 1

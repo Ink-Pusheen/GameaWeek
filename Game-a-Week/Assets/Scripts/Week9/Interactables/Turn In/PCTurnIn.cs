@@ -13,6 +13,8 @@ public class PCTurnIn : PCInteractable
             PCOrderManager.Instance.CompareInputOrder(presumedBox); //Run the check through the order manager
 
             Destroy(presumedBox.gameObject);
+
+            player.ChangeHeldItem(null);
         }
     }
 
