@@ -19,6 +19,11 @@ public class PCRoundManager : MonoBehaviour
     [SerializeField] GameObject EndGameUIToggle; //Gameobject reference to display after the game ends
     [SerializeField] TMP_Text EndGameScore; //Display of the final score
 
+
+    [Header("Players")]
+
+    [SerializeField] bool bTwoPlayer; //Should the game be two player?
+
     private void Awake()
     {
         instance = this; //Set the instance
@@ -94,10 +99,39 @@ public class PCRoundManager : MonoBehaviour
         //Start the round timer
         bRunTimer = true;
 
-        //Enable all player input
-        foreach (var player in players)
+        //Enable all player input based on bTwoPlayer bool
+
+        if (bTwoPlayer)
         {
-            player.EnableInput();
+            foreach (var player in players)
+            {
+                player.EnableInput();
+            }
+        }
+        else
+        {
+            players[0].EnableInput();
+        }
+        
+    }
+
+    //Function to toggle multiplayer
+    public void ToggleMultiplayer(bool bSwapState)
+    {
+        if(bSwapState) bTwoPlayer = !bTwoPlayer; //Flip the state if input is true
+
+        if (bTwoPlayer) //Case for two player
+        {
+            foreach (var player in players)
+            {
+                player.gameObject.SetActive(true);
+            }
+        }
+        else //Case for not two player
+        {
+            players[0].gameObject.SetActive(true); //Enable player one
+            players[1].gameObject.SetActive(false); //Disable player two
         }
     }
+
 }

@@ -5,7 +5,7 @@ public class PCPlayerController : MonoBehaviour
 {
     [Header("Controls")]
 
-    private PlayerInput pInput; //Source of the player input mapping
+   [SerializeField] private PlayerInput pInput; //Source of the player input mapping
 
     private InputAction interact; //Input action to interact with the environment
     [SerializeField] GameObject InteractionPoint; //Gameobject the raycast will fire
@@ -23,7 +23,11 @@ public class PCPlayerController : MonoBehaviour
     [SerializeField] GameObject RotateTowards; //Invisible guide to rotate the player
     [SerializeField] GameObject StartRotationPosition; //Where the guide will start
 
+    [SerializeField] bool bDeactivateImmediately; //Does this player deactivate after initial setup?
+
     private Rigidbody rb; //Rigidbody
+
+    [SerializeField] int playerIndex; //Index purposed of setting up the controls
 
     [Header("Holding Technicality")]
 
@@ -40,33 +44,30 @@ public class PCPlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        pInput = GetComponent<PlayerInput>(); //Get the player input
-        //Debug.Log(pInput);
-        if (pInput is not null)
-        {
-            //Get the input actions from the mapping
-            interact = pInput.actions.FindAction("Interact");
-            dash = pInput.actions.FindAction("Dash");
-
-            horizontal = pInput.actions.FindAction("Horizontal");
-            vertical = pInput.actions.FindAction("Vertical");
-        }
+        pInput = GetComponent<PlayerInput>(); //Get the player inputt
+        SetupPInput(); //Testing
 
         rb = GetComponent<Rigidbody>();
 
         baseMoveSpeed = MoveSpeed; //Sets the initial movespeed
 
         //Add self to the Round Manager instance
-        PCRoundManager.instance.players.Add(this);
+        //PCRoundManager.instance.players.Add(this);
 
         //Deactivate the player input after everything is assigned
         pInput.enabled = false;
+
+        //Deactivate the object if need be
+        if (bDeactivateImmediately) gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         Debug.DrawRay(InteractionPoint.transform.position, InteractionPoint.transform.forward * InteractionRange, Color.red);
+
+        if (!pInput.enabled) return;
 
         //Functionality of getting the interaction
         if (interact.WasPressedThisFrame())
@@ -194,12 +195,31 @@ public class PCPlayerController : MonoBehaviour
     public void EnableInput()
     {
         pInput.enabled = true;
+
+        //SetupPInput(); //Setup the controls once this is set up
     }
 
     //Turn off the input
     public void DisableInput()
     {
         pInput.enabled = false;
+    }
+
+    //Setup player controls
+    public void SetupPInput()
+    {
+        //pInput.defaultActionMap = $"Packin Crew P{playerIndex}";
+        pInput.SwitchCurrentActionMap($"Packin Crew P{playerIndex}");
+
+        if (pInput is not null)
+        {
+            //Get the input actions from the mapping
+            interact = pInput.actions.FindAction("Interact");
+            dash = pInput.actions.FindAction("Dash");
+
+            horizontal = pInput.actions.FindAction("Horizontal");
+            vertical = pInput.actions.FindAction("Vertical");
+        }
     }
 
 
