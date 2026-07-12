@@ -1585,7 +1585,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
-  m_AdditionalShaderChannelsFlag: 1
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -2558,7 +2558,7 @@ Rigidbody:
   m_GameObject: {fileID: 540074852}
   serializedVersion: 5
   m_Mass: 2
-  m_LinearDamping: 0
+  m_LinearDamping: 2
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -2621,10 +2621,10 @@ MonoBehaviour:
   pInput: {fileID: 0}
   InteractionPoint: {fileID: 1194893554}
   InteractionRange: 1.5
-  dashPower: 17
-  dashDecayRate: 25
-  MoveSpeed: 7
-  baseMoveSpeed: 0
+  dashPower: 75
+  dashDecayRate: 80
+  MoveSpeed: 45
+  baseMoveSpeed: 45
   RotateTowards: {fileID: 679822246}
   StartRotationPosition: {fileID: 1013912294}
   bDeactivateImmediately: 1
@@ -2686,7 +2686,7 @@ MeshRenderer:
   - {fileID: -4770390735465466038, guid: 8bab9480ba3c11e47baea4b1b64f6356, type: 3}
   - {fileID: -1580535799172915004, guid: 8bab9480ba3c11e47baea4b1b64f6356, type: 3}
   - {fileID: -8848810374240701247, guid: 8bab9480ba3c11e47baea4b1b64f6356, type: 3}
-  - {fileID: 2926557707537190794, guid: 8bab9480ba3c11e47baea4b1b64f6356, type: 3}
+  - {fileID: 2100000, guid: 9e5a5d4248a398f46b1dcdb469e9d31f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -11650,7 +11650,7 @@ Rigidbody:
   m_GameObject: {fileID: 2431902827125516818}
   serializedVersion: 5
   m_Mass: 2
-  m_LinearDamping: 0
+  m_LinearDamping: 2
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -11710,13 +11710,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3614e3adcba5bb34bb2144bbd5312684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PCPlayerController
-  pInput: {fileID: 0}
+  pInput: {fileID: 4233144835549825993}
   InteractionPoint: {fileID: 1677647195}
   InteractionRange: 1.5
-  dashPower: 17
-  dashDecayRate: 25
-  MoveSpeed: 7
-  baseMoveSpeed: 0
+  dashPower: 75
+  dashDecayRate: 80
+  MoveSpeed: 45
+  baseMoveSpeed: 45
   RotateTowards: {fileID: 385754721}
   StartRotationPosition: {fileID: 653405880}
   bDeactivateImmediately: 0

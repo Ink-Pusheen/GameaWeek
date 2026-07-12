@@ -96,12 +96,12 @@ public class PCPlayerController : MonoBehaviour
             }
         }
 
-        //Functionality of dash
-        if(dash.WasPressedThisFrame())
+        //Functionality of dash [Only applicable when player speed is at its base]
+        if(dash.WasPressedThisFrame() && MoveSpeed == baseMoveSpeed)
         {
             MoveSpeed = dashPower; //Set movespeed to the dash power;
 
-            rb.AddForce(transform.forward * dashPower, ForceMode.Impulse); //Add the force
+            rb.AddForce(transform.forward * dashPower * Time.deltaTime, ForceMode.Impulse); //Add the force
         }
 
         //Once player dashes, this will have to be addressed
@@ -141,7 +141,7 @@ public class PCPlayerController : MonoBehaviour
     {
         Vector3 MoveVector = new Vector3(inHorizontal, 0, inVertical).normalized * MoveSpeed;
 
-        rb.AddForce(MoveVector * MoveSpeed, ForceMode.Force);
+        rb.AddForce(MoveVector * MoveSpeed * Time.deltaTime, ForceMode.Force);
 
         rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, MoveSpeed);
         //rb.linearVelocity = MoveVector;
