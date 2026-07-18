@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "LRPlayer",
+    "maps": [
+        {
+            "name": "PlayerInputer",
+            "id": "373ec380-0ebe-452c-92ff-1257eade177b",
+            "actions": [
+                {
+                    "name": "AnyKey",
+                    "type": "Button",
+                    "id": "e7f35a16-e61a-402a-b93b-bd3978f774e0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ae80727b-2b21-433a-a626-9ef14152b73d",
+                    "path": "<Keyboard>/anyKey",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnyKey",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
