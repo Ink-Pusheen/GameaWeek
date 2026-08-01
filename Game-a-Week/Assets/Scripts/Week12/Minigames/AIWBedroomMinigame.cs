@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AIWBedroomMinigame : MonoBehaviour
 {
@@ -16,6 +18,8 @@ public class AIWBedroomMinigame : MonoBehaviour
     [SerializeField] bool bRunTimer = false; //Should the decay be running?
     [SerializeField] float decayRate; //How fast the player would fall back asleep
 
+    [SerializeField] float totalTimeTaken = 0; //How much time the player taken to wake up
+
 
     [Header("Button Moment")]
 
@@ -23,6 +27,17 @@ public class AIWBedroomMinigame : MonoBehaviour
 
     private int positionClicks; //How many times has this button been pressed in this position?
     [SerializeField] private int clicksTillReposition = 4; //How many clicks until the button moves?
+
+
+    [Header("Visuals")]
+
+    [SerializeField] Image displayImage; //Image to display the current state the player is in
+    [SerializeField] Sprite[] displaySprites; //Sprites to change between
+
+    [SerializeField] GameObject tooltip; //Tool tip to let the player what to know
+
+    [SerializeField] GameObject endScreen; //Display of the end screen
+    [SerializeField] TMP_Text finalScore; //Display of the total time taken
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +50,8 @@ public class AIWBedroomMinigame : MonoBehaviour
     {
         if (!bRunTimer) return; //Don't run if this is false
 
+        totalTimeTaken += Time.deltaTime;
+
         if (awakeAmount > 0) awakeAmount -= Time.deltaTime * decayRate; //If the awake amount is greater than 0, decay
 
         else awakeAmount = 0; //Default 0 else
@@ -45,7 +62,18 @@ public class AIWBedroomMinigame : MonoBehaviour
 
             Debug.Log("Stage Win");
 
-            Invoke("NextScene", 2); //Go to the next minigame after 2 seconds
+            //Invoke("NextScene", 2); //Go to the next minigame after 2 seconds
+
+            //Deactivate the clock wakeup
+            wakeupButton.SetActive(false);
+
+            //Swap the visual
+            displayImage.sprite = displaySprites[displaySprites.Length - 1];
+
+            //Display ending screen
+            endScreen.SetActive(true);
+
+            finalScore.text = $"{totalTimeTaken.ToString("F2")}";
         }
 
         //Change the sprite based on the value compared to milestone
@@ -55,6 +83,8 @@ public class AIWBedroomMinigame : MonoBehaviour
             decayRate += 0.45f; //Add to the decay rate
 
             clicksTillReposition--; //Decrement 1
+
+            if (spriteStage < displaySprites.Length - 1) displayImage.sprite = displaySprites[spriteStage]; //Display the new sprite
             //Debug.Log("Increase"); //Test Debug
         }
 
@@ -64,8 +94,9 @@ public class AIWBedroomMinigame : MonoBehaviour
             decayRate -= 0.45f; //Remove from the decay rate
 
             clicksTillReposition++; //Increment 1
-            //Debug.Log("Decrease"); //Test Debug
 
+            displayImage.sprite = displaySprites[spriteStage]; //Display the new sprite
+            //Debug.Log("Decrease"); //Test Debug
         }
     }
 
@@ -81,6 +112,8 @@ public class AIWBedroomMinigame : MonoBehaviour
     public void WakeUp()
     {
         if (!bRunTimer) return; //No more touchie when timer isn't running
+
+        if(tooltip.activeInHierarchy) tooltip.SetActive(false); //Deactivate the tooltip accordingly
 
         awakeAmount += Random.Range(minIncrease, maxIncrease); //Add to the wake amount
 
