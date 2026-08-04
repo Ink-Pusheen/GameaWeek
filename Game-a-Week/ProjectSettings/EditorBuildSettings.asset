@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Themes.unity
+    guid: 863a23fce8db8e343a8c20c4a714411f
+  - enabled: 1
     path: Assets/Scenes/Main Menu.unity
     guid: e85b36323bf703f408d90609ccb8cd95
   - enabled: 1
@@ -38,6 +41,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Letter Roulette.unity
     guid: 3d450cdfe2c6a864e9b056e0e12d7df2
+  - enabled: 1
+    path: Assets/Scenes/OverType.unity
+    guid: 4031d59562678684d9c104cae55f28b4
   - enabled: 1
     path: Assets/Scenes/An Insomniac Wakeup.unity
     guid: 051df2abd513fd945b024fabdeff9c57

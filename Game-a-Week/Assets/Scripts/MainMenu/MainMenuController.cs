@@ -83,74 +83,78 @@ public class MainMenuController : MonoBehaviour
     {
         switch (camPos.x)
         {
-            case (-15f): //Case of hovering the quit game
+            case (-30): //Case of quitting the game
                 Debug.Log("Quit");
                 Application.Quit();
                 break;
 
+            case (-15f): //Case of viewing the themes
+                SceneManager.LoadScene(gameNames[0]);
+                break;
+
             case (0): //Case of Week 1
                 Debug.Log("Week 1");
-                SceneManager.LoadScene(gameNames[0]); //Load the specified game
+                SceneManager.LoadScene(gameNames[1]); //Load the specified game
                 break;
 
             case (15): //Case of Week 2
                 Debug.Log("Week 2");
-                SceneManager.LoadScene(gameNames[1]); //Load the specified game
+                SceneManager.LoadScene(gameNames[2]); //Load the specified game
                 break;
 
             case (30): //Case of Week 3
                 Debug.Log("Week 3");
-                SceneManager.LoadScene(gameNames[2]); //Load the specified game
+                SceneManager.LoadScene(gameNames[3]); //Load the specified game
                 break;
 
             case (45): //Case of Week 4
                 Debug.Log("Week 4");
-                SceneManager.LoadScene(gameNames[3]); //Load the specified game
+                SceneManager.LoadScene(gameNames[4]); //Load the specified game
                 break;
 
             case (60): //Case of Week 5
                 Debug.Log("Week 5");
-                SceneManager.LoadScene(gameNames[4]); //Load the specified game
+                SceneManager.LoadScene(gameNames[5]); //Load the specified game
                 break;
 
             case (75): //Case of Week 6
                 Debug.Log("Week 6");
-                SceneManager.LoadScene(gameNames[5]); //Load the specified game
+                SceneManager.LoadScene(gameNames[6]); //Load the specified game
                 break;
 
             case (90): //Case of Week 7
                 Debug.Log("Week 7");
-                SceneManager.LoadScene(gameNames[6]); //Load the specified game
+                SceneManager.LoadScene(gameNames[7]); //Load the specified game
                 break;
 
             case (105): //Case of Week 8
                 Debug.Log("Week 8");
-                SceneManager.LoadScene(gameNames[7]); //Load the specified game
+                SceneManager.LoadScene(gameNames[8]); //Load the specified game
                 break;
 
             case (120): //Case of Week 9
                 Debug.Log("Week 9");
-                SceneManager.LoadScene(gameNames[8]); //Load the specified game
+                SceneManager.LoadScene(gameNames[9]); //Load the specified game
                 break;
 
             case (135): //Case of Week 10
                 Debug.Log("Week 10");
-                SceneManager.LoadScene(gameNames[9]); //Load the specified game
+                SceneManager.LoadScene(gameNames[10]); //Load the specified game
                 break;
 
             case (150): //Case of Week 11
                 Debug.Log("Week 11");
-                SceneManager.LoadScene(gameNames[10]); //Load the specified game
+                SceneManager.LoadScene(gameNames[11]); //Load the specified game
                 break;
 
             case (165): //Case of Week 12
                 Debug.Log("Week 12");
-                SceneManager.LoadScene(gameNames[11]); //Load the specified game
+                SceneManager.LoadScene(gameNames[12]); //Load the specified game
                 break;
 
             case (180): //Case of Week 13
                 Debug.Log("Week 13");
-                //SceneManager.LoadScene(gameNames[12]); //Load the specified game //Uncomment this when the game is created
+                //SceneManager.LoadScene(gameNames[13]); //Load the specified game //Uncomment this when the game is created
                 break;
         }
     }

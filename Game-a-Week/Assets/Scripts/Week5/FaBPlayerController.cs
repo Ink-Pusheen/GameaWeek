@@ -135,6 +135,7 @@ public class FaBPlayerController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (FaBGameManager.instance == null || FaBEnemySpawner.Instance == null) return; //Don't Proceed if these don't exist
         Debug.Log("Player has died, display end of game screen");
         FaBGameManager.instance.GameOver();
 
