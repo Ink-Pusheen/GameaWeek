@@ -46,10 +46,11 @@ public class LRPlayer : MonoBehaviour
 
 
         //If at any time this threshhold is met, close the game
-        if (holdDuration >= 5)
+        if (holdDuration >= 2)
         {
             Debug.Log("Quit");
-            Application.Quit();
+            //Application.Quit();
+            SceneSwapper.instance.LoadUnityScene("Main Menu"); //Return to the main menu
         }
     }
 }
