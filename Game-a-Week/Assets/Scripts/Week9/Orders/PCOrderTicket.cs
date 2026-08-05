@@ -22,6 +22,8 @@ public class PCOrderTicket : MonoBehaviour
 
     [SerializeField] List<string> RequiredContents = new(); //Built list to define what the order manager will check for
 
+    public GameObject newTicketPosition; //Where the new ticket should attach to once spawned
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -46,7 +48,8 @@ public class PCOrderTicket : MonoBehaviour
             panel.color = Color.red; //Display red before deletion
 
             //Subtract score
-            PCOrderManager.Instance.UpdateScore(-20); //Lose 20, womp womp
+            if(PCOrderManager.Instance != null) PCOrderManager.Instance.UpdateScore(-20); //Lose 20, womp womp
+            if(PCOrderManagerPolished.Instance != null) PCOrderManagerPolished.Instance.UpdateScore(-20); //Lose 20 but polished, womp womp
 
             //Queue Destroy the Gameobject and remove the ticket
             QueueDestroy();
@@ -147,6 +150,11 @@ public class PCOrderTicket : MonoBehaviour
         if (PCOrderManager.Instance != null)
         {
             PCOrderManager.Instance.RemoveTicket(this);
+        }
+
+        if (PCOrderManagerPolished.Instance != null)
+        {
+            PCOrderManagerPolished.Instance.RemoveTicket(this);
         }
     }
 
