@@ -24,6 +24,11 @@ public class PCOrderManagerPolished : MonoBehaviour
     [SerializeField] int gainedPoints; //How many points the player gained this round
     [SerializeField] TMP_Text pointsText; //Display how much score the player has
 
+    [SerializeField] GameObject[] conveyorRouteLeft; //Route boxes take going left
+    [SerializeField] GameObject[] conveyorRouteRight; //Route boxes take going right
+
+    [SerializeField] GameObject shipObject; //Object to spawn when a box is sent
+
     private void Awake()
     {
         //Set the instance
@@ -59,6 +64,21 @@ public class PCOrderManagerPolished : MonoBehaviour
     //Function to check if the contents of the box match any of the requested ticket orders
     public void CompareInputOrder(PCCardboardBox inBox)
     {
+        Quaternion randomBoxRotation = Quaternion.Euler(0, UnityEngine.Random.Range(0f, 360f), 0);
+
+        GameObject sentBox = Instantiate(shipObject, conveyorRouteLeft[0].transform.position, randomBoxRotation); //Spawn the shipment box
+
+        PCConveyorSendout sendoutBox = sentBox.GetComponent<PCConveyorSendout>(); //Grab the sendout component
+
+        int path = UnityEngine.Random.Range(0, 2); //Randomize which way the box goes
+
+        if (sendoutBox is not null) //Ensure this isn't null
+        {
+            if (path is 0) sendoutBox.SetWaypoints(conveyorRouteLeft); //Set the path leftwards
+
+            else if (path is 1) sendoutBox.SetWaypoints(conveyorRouteRight); //Set the path rightwards
+        }
+
         bool match = false; //Indicator if a match was found
 
         for (int order = 0; order < activeOrders.Count; order++)
@@ -161,5 +181,15 @@ public class PCOrderManagerPolished : MonoBehaviour
         lastOrderTime = Time.time; //Reset the time
 
         bRunTimer = true; //Start the timer
+    }
+
+
+    //Public function to force remove the remaining tickets
+    public void RemoveTickets()
+    {
+        foreach (var ticket in activeOrders)
+        {
+            ticket.ForceCloseTicket();
+        }
     }
 }

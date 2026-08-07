@@ -68,6 +68,7 @@ public class PCRoundManagerPolished : MonoBehaviour
                 MidRoundUIToggle.SetActive(false);
                 EndGameUIToggle.SetActive(true);
                 EndGameScore.text = $"Final Score: {PCOrderManagerPolished.Instance.CurrentScore()}"; //Display the final score
+                PCOrderManagerPolished.Instance.RemoveTickets(); //Remove remaining tickets
             }
         }
     }

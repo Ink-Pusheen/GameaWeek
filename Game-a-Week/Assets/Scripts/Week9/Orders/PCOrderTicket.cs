@@ -24,6 +24,8 @@ public class PCOrderTicket : MonoBehaviour
 
     public GameObject newTicketPosition; //Where the new ticket should attach to once spawned
 
+    [SerializeField] bool bColorshift = false; //Should the timer be changing colors? <Default false>
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,7 +39,11 @@ public class PCOrderTicket : MonoBehaviour
 
         timeRemaining -= Time.deltaTime; //Run the timer
 
-        timerBar.fillAmount = timeRemaining / startTime; //Set the timer bar
+        float timeDivisible = timeRemaining / startTime; //Get the float of the time remaining to the starting time
+
+        timerBar.fillAmount = timeDivisible; //Set the timer bar
+
+        if (bColorshift) timerBar.color = Color.Lerp(Color.red, Color.green, timeDivisible); //Lerp the timer bar color between the two if true
 
         if(timeRemaining <= 0)
         {
@@ -171,5 +177,14 @@ public class PCOrderTicket : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
 
         panel.color = Color.white;
+    }
+
+
+    //Force remove the ticket without effecting the ticket
+    public void ForceCloseTicket()
+    {
+        bRunTimer = false; //Stop the timer
+
+        Destroy(gameObject);
     }
 }

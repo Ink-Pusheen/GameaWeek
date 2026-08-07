@@ -154,7 +154,7 @@ public class MainMenuController : MonoBehaviour
 
             case (180): //Case of Week 13
                 Debug.Log("Week 13");
-                //SceneManager.LoadScene(gameNames[13]); //Load the specified game //Uncomment this when the game is created
+                SceneManager.LoadScene(gameNames[13]); //Load the specified game
                 break;
         }
     }
